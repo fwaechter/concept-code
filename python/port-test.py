@@ -3,16 +3,15 @@
 
 """
 Test for open ports on a given host
-
 """
 
 import sys
 import socket
 import argparse
 
-def socket_check(host, port):
+def socket_check(host, port, timeout):
         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        s.settimeout(1)
+        s.settimeout(float(timeout))
         try:
                 s.connect((host, int(port)))
                 print "Host: " + host + " Port: " + str(port) + " open"
@@ -24,7 +23,7 @@ def initialize_check(host, minport, maxport, timeout):
         if int(minport) > int(maxport):
                 print "minport > maxport"
         while int(minport) <= int(maxport):
-                        socket_check(host, int(minport))
+                        socket_check(host, int(minport), timeout)
                         minport = int(minport) + 1
 
 def parse_options():
